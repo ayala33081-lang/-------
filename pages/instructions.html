@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דמקה | הוראות המשחק</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="page-instructions">
+
+    <header class="main-hud-header">
+    <div class="hud-container">
+        <div class="hud-left">
+            <button id="btn-open-settings" class="hud-icon-btn" title="הגדרות">
+                <span class="icon">⚙️</span>
+            </button>
+        </div>
+        
+        <div class="hud-center">
+            <div class="hud-logo">
+                CHECKERS<span class="neon-text">PRO</span>
+            </div>
+        </div>
+
+        <nav class="hud-right">
+            <ul class="hud-nav-pills">
+                <li><a href="../index.html" class="pill-link">בית</a></li>
+                <li><a href="instructions.html" class="pill-link">הוראות</a></li>
+                <li><a href="scores.html" class="pill-link">שיאים</a></li>
+                <!-- <li><a href="#" class="pill-link active">התחל משחק</a></li> -->
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+    <main class="content-layout">
+        <article class="card instructions-card">
+            <header class="card-header">
+                <h1 class="page-title">הוראות משחק הדמקה</h1>
+            </header>
+            
+            <div class="typography-content">
+                
+                <section class="instruction-section">
+                    <h2>מטרת המשחק</h2>
+                    <p>להוריד (לאכול) את כל הכלים של היריב מהלוח, או לחסום אותם כך שלא יוכלו לבצע שום מהלך חוקי.</p>
+                </section>
+
+                <section class="instruction-section">
+                    <h2>חוקי התנועה</h2>
+                    <ul>
+                        <li><strong>תנועה רגילה:</strong> כלים רגילים יכולים לנוע רק צעד אחד באלכסון <strong>קדימה</strong> (לכיוון צד היריב), אל משבצת פנויה.</li>
+                        <li><strong>משבצות מותרות:</strong> המשחק מתנהל על המשבצות הכהות של הלוח בלבד.</li>
+                    </ul>
+                </section>
+
+                <section class="instruction-section">
+                    <h2>אכילת כלים</h2>
+                    <ul>
+                        <li>אכילה מתבצעת על ידי דילוג באלכסון מעל כלי יריב אל המשבצת הפנויה שאחריו. הכלי עליו דילגתם יוסר מהלוח.</li>
+                        <li><strong>חובת אכילה:</strong> אם יש לכם אפשרות לאכול כלי של היריב - אתם חייבים לעשות זאת (אם יש מספר אפשרויות אכילה, אפשר לבחור ביניהן).</li>
+                        <li><strong>אכילת שרשרת:</strong> אם לאחר אכילה יש אפשרות לדלג מעל כלי יריב נוסף עם אותו הכלי, חובה להמשיך באותו התור ולאכול גם אותו.</li>
+                    </ul>
+                </section>
+
+                <section class="instruction-section">
+                    <h2>יצירת מלך</h2>
+                    <ul>
+                        <li>כאשר כלי רגיל מצליח להגיע לשורה האחרונה ביותר בצד של היריב, הוא מוכתר ל"מלך".</li>
+                        <li><strong>הכוח של המלך:</strong> בשונה מכלי רגיל, המלך יכול לנוע ולאכול באלכסון <strong>גם קדימה וגם אחורה</strong>.</li>
+                    </ul>
+                </section>
+
+            </div>
+        </article>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2026 פרויקט דמקה | פותח על ידי אילה עיצוב ופיתוח | סמינר מאיר</p>
+    </footer>
+
+    <dialog id="modal-settings" class="modal" aria-labelledby="modal-settings-title">
+        <div class="modal-inner">
+            <button class="btn-close-modal" id="btn-close-settings" aria-label="סגור חלון">&times;</button>
+            <h2 id="modal-settings-title" class="modal-title">הגדרות משחק</h2>
+            <div class="settings-list">
+                <div class="setting-item">
+                    <span class="setting-label">שמע (אפקטים ומוזיקה)</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-sound" checked><span class="toggle-slider"></span></label>
+                </div>
+                <div class="setting-item">
+                    <span class="setting-label">אפשר רמזים במהלך המשחק</span>
+                    <label class="toggle-switch"><input type="checkbox" id="toggle-hints" checked><span class="toggle-slider"></span></label>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <script type="module" src="../scripts/main.js" ></script>
+
+
+</body>
+</html>

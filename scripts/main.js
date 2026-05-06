@@ -1,0 +1,96 @@
+/**
+ * @fileoverview לוגיקה משותפת לכל הדפים - ניהול מודאלים והגדרות
+ * @module main
+ */
+
+// ==========================================
+// --- ניהול מודאלים - פונקציה גנרית ---
+// ==========================================
+
+/**
+ * מחבר אירועי פתיחה וסגירה למודאל נתון.
+ * פונקציה גנרית שמשמשת את כל המודאלים באתר.
+ * @param {string} openBtnId - מזהה כפתור הפתיחה
+ * @param {string} closeBtnId - מזהה כפתור הסגירה
+ * @param {string} dialogId - מזהה אלמנט ה-dialog
+ * @returns {void}
+ */
+const setupModal = (openBtnId, closeBtnId, dialogId) => {
+    const openBtn = document.querySelector(`#${openBtnId}`);
+    const closeBtn = document.querySelector(`#${closeBtnId}`);
+    const dialog = document.querySelector(`#${dialogId}`);
+
+    if (!openBtn || !closeBtn || !dialog) return;
+
+    openBtn.addEventListener('click', () => dialog.showModal());
+    closeBtn.addEventListener('click', () => dialog.close());
+};
+
+// --- חיבור מודאל ההגדרות ---
+setupModal('btn-open-settings', 'btn-close-settings', 'modal-settings');
+
+// ==========================================
+// --- טעינה ושמירה של הגדרות ---
+// ==========================================
+
+const soundToggle = document.querySelector('#toggle-sound');
+const hintsToggle = document.querySelector('#toggle-hints');
+
+if (soundToggle) {
+    soundToggle.addEventListener('change', () => {
+        localStorage.setItem('isSound', soundToggle.checked);
+    });
+}
+
+if (hintsToggle) {
+    hintsToggle.addEventListener('change', () => {
+        localStorage.setItem('isHints', hintsToggle.checked);
+        window.dispatchEvent(new CustomEvent('hintsSettingChanged'));
+    });
+}
+
+/**
+ * טוען את הגדרות הצליל והרמזים מה-localStorage ומחיל אותן על המתגים.
+ * @returns {void}
+ */
+const loadSettings = () => {
+    const savedSound = localStorage.getItem('isSound');
+    const savedHints = localStorage.getItem('isHints');
+
+    if (savedSound !== null && soundToggle) {
+        soundToggle.checked = (savedSound === 'true');
+    }
+
+    if (savedHints !== null && hintsToggle) {
+        hintsToggle.checked = (savedHints === 'true');
+    }
+};
+
+loadSettings();
+
+// ==========================================
+// --- ייצוא פונקציות לשאר קובצי הפרויקט ---
+// ==========================================
+
+/**
+ * מחזיר האם אפשרות הצליל מופעלת.
+ * @returns {boolean}
+ */
+export const isSoundEnabled = () => {
+    const saved = localStorage.getItem('isSound');
+    return saved === null || saved === 'true';
+};
+
+/**
+ * מחזיר האם אפשרות הרמזים מופעלת.
+ * @returns {boolean}
+ */
+export const isHintsEnabled = () => {
+    const saved = localStorage.getItem('isHints');
+    return saved === null || saved === 'true';
+};
+
+/**
+ * חושף את פונקציית setupModal לשימוש בדפים אחרים.
+ */
+export { setupModal };
