@@ -27,7 +27,7 @@ const setupModal = (openBtnId, closeBtnId, dialogId) => {
 };
 
 // --- חיבור מודאל ההגדרות ---
-setupModal('btn-open-settings', 'btn-close-settings', 'modal-settings');
+// setupModal('btn-open-settings', 'btn-close-settings', 'modal-settings');
 
 // ==========================================
 // --- טעינה ושמירה של הגדרות ---

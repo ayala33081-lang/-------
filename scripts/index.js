@@ -5,8 +5,9 @@
 
 import { setupModal } from './main.js';
 
-// --- חיבור מודאל האימות ---
+// --- חיבור מודאלים ---
 setupModal('btn-open-auth', 'btn-close-auth', 'modal-auth');
+setupModal('btn-open-settings', 'btn-close-settings', 'modal-settings');
 
 // =========================================
 // --- אימות ורישום שחקן ---

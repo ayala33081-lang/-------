@@ -17,16 +17,12 @@ const p2Name = currentGameData.player2Name;
 
 /**
  * זמן התחלה לפי רמת קושי בשניות.
- //לא הבנתי
  * @type {Object.<string, number>}
  */
 const DIFFICULTY_TIMES = { easy: 600, medium: 300, hard: 180 };
-//לא הבנתי
-//לתזכר איך בדיוק עוד השליפה
+
 const urlParams = new URLSearchParams(window.location.search);
 const selectedLevel = urlParams.get('level') ?? currentGameData.selectedLevel ?? 'easy';
-//לא הבנתי
-// האם חיבים את ??600
 const startTime = DIFFICULTY_TIMES[selectedLevel] ?? 600;
 
 gameState.p1Time = startTime;
@@ -55,15 +51,13 @@ const els = {
     btnEnd:        document.querySelector('#btn-end-turn'),
     btnHint:       document.querySelector('#btn-hint'),
     modalGameOver: document.querySelector('#modal-game-over'),
-    winnerMsg:     document.querySelector('#winner-message'),
-    btnRestart:    document.querySelector('#btn-restart-game'),
+    winnerMsg:     document.querySelector('#winner-message')
+    // btnRestart:    document.querySelector('#btn-restart-game'),
 };
 
 // =========================================
 // --- אודיו - Web Audio API ---
 // =========================================
-//לא הבנתי
-//הסבר כללי
 /**
  * אובייקט לניהול צלילי המשחק באמצעות Web Audio API.
  */
@@ -119,23 +113,31 @@ const audio = {
         osc.stop(ctx.currentTime + duration);
     },
 
-    /** צליל מהלך רגיל */
+    /** צליל מהלך רגיל 
+     * @returns {void}
+    */
     move()    { this.play(440, 0.08); },
 
-    /** צליל אכילת כלי יריב - מכה קצרה ועמוקה */
+    /** צליל אכילת כלי יריב - מכה קצרה ועמוקה 
+     * @returns {void}
+    */
     capture() {
         this.play(180, 0.12, 'triangle');
         setTimeout(() => this.play(120, 0.18, 'sine'), 80);
     },
 
-    /** צליל הכתרה למלכה - שלושה תווים עולים */
+    /** צליל הכתרה למלכה - שלושה תווים עולים 
+     * @returns {void}
+    */
     queen() {
         this.play(523, 0.12);
         setTimeout(() => this.play(659, 0.12), 130);
         setTimeout(() => this.play(784, 0.25), 260);
     },
 
-    /** צליל ניצחון דרמטי - פנפארה עולה עם אקורד מלא */
+    /** צליל ניצחון דרמטי - פנפארה עולה עם אקורד מלא 
+     * @returns {void}
+    */
     gameOver() {
         this.play(523, 0.12);
         setTimeout(() => this.play(659, 0.12), 130);
@@ -157,7 +159,6 @@ const audio = {
 const updateHintButton = () => {
     if (!els.btnHint) return;
     const hintsOn = localStorage.getItem('isHints');
-    //לא הבנתי
     const isEnabled = hintsOn === null || hintsOn === 'true';
     els.btnHint.disabled = !isEnabled;
     els.btnHint.classList.toggle('btn-disabled', !isEnabled);
@@ -184,18 +185,14 @@ const setupGame = () => {
     startTimer();
     updateHintButton();
 
-    //לא הבנתי
-//למה צריך את הסימן שאלה
+
     els.btnEnd?.addEventListener('click', handleEndTurn);
     els.btnHint?.addEventListener('click', handleHint);
-    //לא הבנתי
-    els.btnRestart?.addEventListener('click', () => window.location.reload());
+    // els.btnRestart?.addEventListener('click', () => window.location.reload());
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') handleEndTurn();
     });
-//לא הבנתי
-//איך יכול להיות כזה סוג ארוע??
     window.addEventListener('hintsSettingChanged', updateHintButton);
 
     setupModal('btn-open-settings', 'btn-close-settings', 'modal-settings');
@@ -212,11 +209,9 @@ const setupGame = () => {
  */
 const renderBoard = () => {
     if (!els.board) return;
-    //לא הבנתי
-//הגיון איך עובד הנקיון הזה
+
     els.board.replaceChildren();
-//לא הבנתי
-//מה הערכים שמקבלים row ורIגס
+
     gameState.boardMatrix.forEach((row, rIdx) => {
         row.forEach((cell, cIdx) => {
             const sq = document.createElement('div');
@@ -233,8 +228,6 @@ const renderBoard = () => {
                 const canDrag = (isP1 === gameState.isPlayer1Turn)
                     && !gameState.hasMovedThisTurn
                     && !gameState.isGameOver;
-                    //לא הבנתי
-//מה פרוש setarttibute
                 piece.setAttribute('draggable', canDrag ? 'true' : 'false');
 
                 sq.appendChild(piece);
@@ -242,8 +235,7 @@ const renderBoard = () => {
             els.board.appendChild(sq);
         });
     });
-//לא הבנתי
-//מה זה אחרי claslist יש toggle
+
     els.statCardP1?.classList.toggle('active-turn', gameState.isPlayer1Turn);
     els.statCardP2?.classList.toggle('active-turn', !gameState.isPlayer1Turn);
 };
@@ -287,8 +279,7 @@ const formatTime = (seconds) => {
  */
 const startTimer = () => {
     if (gameState.timerInterval) clearInterval(gameState.timerInterval);
-//לא הבנתי
-//מה התחביר בכללי
+
     gameState.timerInterval = setInterval(() => {
         if (gameState.isGameOver) return;
 
@@ -330,7 +321,16 @@ const handleGameOver = (winnerName, reason) => {
     //לא הבנתי
 //לשנות לפי הכללים של המורה!!!
     if (els.winnerMsg) {
-        els.winnerMsg.innerHTML = `🏆 ${winnerName} מנצח/ת! 🏆<br><small style="font-size:0.7em; font-weight:400; opacity:0.8">${reason}</small>`;
+        els.winnerMsg.replaceChildren();
+
+        const titleText = document.createTextNode(`🏆 ${winnerName} מנצח/ת! 🏆`);
+
+        const reasonEl = document.createElement('small');
+        reasonEl.style.cssText = 'font-size:0.7em; font-weight:400; opacity:0.8; display:block';
+        reasonEl.textContent = reason;
+
+        els.winnerMsg.appendChild(titleText);
+        els.winnerMsg.appendChild(reasonEl);
     }
     els.modalGameOver?.showModal();
 };
@@ -348,7 +348,7 @@ const saveWinToStorage = (winnerName, timeUsedSeconds) => {
     if (!winner) return;
 
     winner.wins = (winner.wins ?? 0) + 1;
-//לא הבנתי
+
     const prevBest = winner.bestTimeSeconds ?? Infinity;
     if (timeUsedSeconds < prevBest) {
         winner.bestTimeSeconds = timeUsedSeconds;
@@ -377,15 +377,13 @@ const attachDragEvents = () => {
         gameState.draggedPiece = e.target;
         gameState.originSquare = e.target.parentElement;
     });
-//לא הבנתי
-//למה מבטילים את ברירת מחדל?
+
     els.board.addEventListener('dragover', (e) => e.preventDefault());
 
     els.board.addEventListener('drop', (e) => {
         e.preventDefault();
         if (gameState.isGameOver || !gameState.originSquare) return;
-//לא הבנתי
-//מה פרוש closets?
+
         const sq = e.target.closest('.cell');
         if (!sq) return;
 
@@ -457,14 +455,13 @@ const handleHint = () => {
     for (let r = 0; r < 8; r++) {
         for (let c = 0; c < 8; c++) {
             const cell = gameState.boardMatrix[r][c];
-            //לא הבנתי
-//למה התנאי הזה ולמה לא לשלוף רגיל של מי התור
+
             const isCurrentPlayer = gameState.isPlayer1Turn
                 ? (cell === 1 || cell === 3)
                 : (cell === 2 || cell === 4);
 
             if (!isCurrentPlayer) continue;
-//לא הבנתי
+
             const canMove = directions.some(([dr, dc]) =>
                 checkMoveValidity(r, c, r + dr, c + dc, cell).valid
             );
